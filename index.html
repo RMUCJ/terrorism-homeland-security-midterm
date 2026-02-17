@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)file:///C:/Users/Frank/Downloads/index_2.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Practice Midterm – Terrorism &amp; Homeland Security</title>
+<link href="./index_files/css2" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --surface2: #1a1e2a; --border: #252a38;
+    --accent: #c8a96e; --accent2: #4a7fa5; --correct: #3a7d5c; --wrong: #8b3a3a;
+    --text: #dde3ef; --muted: #6b7494;
+    --mono: 'IBM Plex Mono', monospace; --sans: 'IBM Plex Sans', sans-serif; --display: 'Playfair Display', serif;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:var(--sans); font-weight:300; min-height:100vh; line-height:1.7; }
+
+  header { border-bottom:1px solid var(--border); padding:3rem 2rem 2rem; max-width:860px; margin:0 auto; }
+  .course-label { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.2em; color:var(--accent); text-transform:uppercase; margin-bottom:0.75rem; }
+  header h1 { font-family:var(--display); font-size:clamp(1.8rem,4vw,2.8rem); font-weight:900; line-height:1.15; color:#fff; }
+  header p { margin-top:0.75rem; color:var(--muted); font-size:0.9rem; font-family:var(--mono); }
+
+  .progress-wrap { max-width:860px; margin:2rem auto 0; padding:0 2rem; }
+  .progress-bar-bg { background:var(--border); height:3px; border-radius:2px; overflow:hidden; }
+  .progress-bar-fill { height:100%; background:linear-gradient(90deg,var(--accent2),var(--accent)); width:0%; transition:width 0.5s ease; }
+  .progress-label { font-family:var(--mono); font-size:0.7rem; color:var(--muted); margin-top:0.4rem; }
+
+  .section-header { max-width:860px; margin:3rem auto 1.5rem; padding:0 2rem; display:flex; align-items:center; gap:1rem; }
+  .section-badge { font-family:var(--mono); font-size:0.65rem; letter-spacing:0.15em; background:var(--accent); color:#000; padding:0.2rem 0.6rem; font-weight:600; flex-shrink:0; }
+  .section-title { font-family:var(--display); font-size:1.3rem; color:#fff; }
+  .section-meta { font-family:var(--mono); font-size:0.7rem; color:var(--muted); margin-left:auto; flex-shrink:0; }
+
+  .questions-wrap { max-width:860px; margin:0 auto; padding:0 2rem 4rem; }
+
+  .question-card { background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--border); margin-bottom:1.25rem; padding:1.75rem 2rem; transition:border-color 0.3s; animation:fadeUp 0.4s ease both; }
+  .question-card:hover { border-left-color:var(--accent2); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);} }
+
+  .q-num { font-family:var(--mono); font-size:0.65rem; color:var(--accent); letter-spacing:0.1em; margin-bottom:0.5rem; }
+  .q-text { font-size:0.975rem; color:#e8eaf2; font-weight:400; margin-bottom:1.2rem; line-height:1.6; }
+
+  .options { display:flex; flex-direction:column; gap:0.5rem; }
+  .option { display:flex; align-items:flex-start; gap:0.75rem; padding:0.6rem 0.9rem; border:1px solid var(--border); cursor:pointer; transition:all 0.2s; background:var(--surface2); font-size:0.875rem; color:var(--muted); user-select:none; }
+  .option:hover { border-color:var(--accent2); color:var(--text); background:#1e2436; }
+  .option .letter { font-family:var(--mono); font-size:0.7rem; font-weight:600; color:var(--accent2); flex-shrink:0; padding-top:0.05rem; }
+  .option.correct { border-color:var(--correct); background:rgba(58,125,92,0.15); color:#7ed4a9; }
+  .option.correct .letter { color:#7ed4a9; }
+  .option.wrong { border-color:var(--wrong); background:rgba(139,58,58,0.15); color:#e07070; }
+  .option.wrong .letter { color:#e07070; }
+  .option.disabled { pointer-events:none; }
+
+  .answer-reveal { margin-top:1rem; padding:0.6rem 1rem; background:rgba(200,169,110,0.08); border-left:2px solid var(--accent); font-family:var(--mono); font-size:0.75rem; color:var(--accent); display:none; }
+  .answer-reveal.show { display:block; animation:fadeUp 0.3s ease; }
+
+  .score-box { background:var(--surface); border:1px solid var(--border); border-top:3px solid var(--accent); max-width:860px; margin:0 auto 3rem; padding:2rem; text-align:center; display:none; }
+  .score-box.show { display:block; animation:fadeUp 0.5s ease; }
+  .score-number { font-family:var(--display); font-size:3.5rem; font-weight:900; color:var(--accent); line-height:1; }
+  .score-label { font-family:var(--mono); font-size:0.75rem; color:var(--muted); margin-top:0.5rem; }
+
+  .essay-card { background:var(--surface); border:1px solid var(--border); margin-bottom:1.25rem; animation:fadeUp 0.4s ease both; }
+  .essay-prompt { display:flex; align-items:flex-start; gap:1rem; padding:1.5rem 1.75rem; cursor:pointer; transition:background 0.2s; }
+  .essay-prompt:hover { background:var(--surface2); }
+  .essay-num { font-family:var(--mono); font-size:0.65rem; color:var(--accent2); letter-spacing:0.1em; flex-shrink:0; padding-top:0.2rem; }
+  .essay-q { font-size:0.95rem; color:#e8eaf2; flex:1; font-weight:400; }
+  .essay-toggle { font-family:var(--mono); font-size:0.8rem; color:var(--accent); flex-shrink:0; transition:transform 0.3s; }
+  .essay-card.open .essay-toggle { transform:rotate(45deg); }
+  .essay-guidance { border-top:1px solid var(--border); padding:1.5rem 1.75rem; display:none; background:rgba(74,127,165,0.04); }
+  .essay-card.open .essay-guidance { display:block; animation:fadeUp 0.3s ease; }
+  .guidance-label { font-family:var(--mono); font-size:0.65rem; letter-spacing:0.15em; color:var(--accent2); text-transform:uppercase; margin-bottom:0.75rem; }
+  .essay-guidance p { font-size:0.875rem; color:var(--muted); line-height:1.7; margin-bottom:0.5rem; }
+  .essay-guidance ul { padding-left:1.2rem; margin-top:0.5rem; }
+  .essay-guidance ul li { font-size:0.85rem; color:var(--muted); margin-bottom:0.3rem; }
+
+  .btn-wrap { max-width:860px; margin:0.5rem auto 2rem; padding:0 2rem; }
+  button.submit-btn { background:var(--accent); color:#000; border:none; padding:0.75rem 2.5rem; font-family:var(--mono); font-size:0.8rem; font-weight:600; letter-spacing:0.1em; cursor:pointer; transition:opacity 0.2s; }
+  button.submit-btn:hover { opacity:0.85; }
+  button.reset-btn { background:transparent; color:var(--muted); border:1px solid var(--border); padding:0.6rem 1.5rem; font-family:var(--mono); font-size:0.75rem; cursor:pointer; margin-top:1rem; transition:all 0.2s; }
+  button.reset-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+  footer { text-align:center; padding:2rem; font-family:var(--mono); font-size:0.7rem; color:var(--border); border-top:1px solid var(--border); max-width:860px; margin:0 auto; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="course-label">Robert Morris University · Terrorism &amp; Homeland Security</div>
+  <h1>Practice Midterm Examination</h1>
+  <p>// Select an answer to reveal the correct response — essays expand on click</p>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressBar"></div></div>
+  <div class="progress-label" id="progressLabel">0 of 25 questions answered</div>
+</div>
+
+<div class="section-header">
+  <span class="section-badge">Section A</span>
+  <span class="section-title">Multiple Choice</span>
+  <span class="section-meta">25 × 2 pts = 50 pts</span>
+</div>
+<div class="questions-wrap" id="mcWrap"><div class="question-card" data-answered="false" style="animation-delay: 0s;">
+    <div class="q-num">Q.01</div>
+    <div class="q-text">A key reason terrorism is difficult to define is that:</div>
+    <div class="options">
+      <div class="option" data-qi="0" data-oi="0">
+        <span class="letter">A</span>
+        <span>It is always religiously motivated</span>
+      </div>
+      <div class="option" data-qi="0" data-oi="1">
+        <span class="letter">B</span>
+        <span>It only occurs in democracies</span>
+      </div>
+      <div class="option" data-qi="0" data-oi="2">
+        <span class="letter">C</span>
+        <span>Definitions include political and moral judgments</span>
+      </div>
+      <div class="option" data-qi="0" data-oi="3">
+        <span class="letter">D</span>
+        <span>It is identical to conventional war</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-0"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.02s;">
+    <div class="q-num">Q.02</div>
+    <div class="q-text">A definition element most commonly included in academic definitions of terrorism is:</div>
+    <div class="options">
+      <div class="option" data-qi="1" data-oi="0">
+        <span class="letter">A</span>
+        <span>Use or threat of violence toward an audience beyond the immediate victim</span>
+      </div>
+      <div class="option" data-qi="1" data-oi="1">
+        <span class="letter">B</span>
+        <span>Use of uniforms and formal ranks</span>
+      </div>
+      <div class="option" data-qi="1" data-oi="2">
+        <span class="letter">C</span>
+        <span>State monopoly on force</span>
+      </div>
+      <div class="option" data-qi="1" data-oi="3">
+        <span class="letter">D</span>
+        <span>Control of territory as the primary goal</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-1"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.04s;">
+    <div class="q-num">Q.03</div>
+    <div class="q-text">A core measurement challenge in terrorism research is:</div>
+    <div class="options">
+      <div class="option" data-qi="2" data-oi="0">
+        <span class="letter">A</span>
+        <span>Terrorism has no political goals</span>
+      </div>
+      <div class="option" data-qi="2" data-oi="1">
+        <span class="letter">B</span>
+        <span>All incidents are reported equally across the world</span>
+      </div>
+      <div class="option" data-qi="2" data-oi="2">
+        <span class="letter">C</span>
+        <span>Terrorism never involves messaging</span>
+      </div>
+      <div class="option" data-qi="2" data-oi="3">
+        <span class="letter">D</span>
+        <span>Terrorism is easy to observe but hard to code consistently</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-2"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.06s;">
+    <div class="q-num">Q.04</div>
+    <div class="q-text">Rapoport's 'waves' model is best understood as:</div>
+    <div class="options">
+      <div class="option" data-qi="3" data-oi="0">
+        <span class="letter">A</span>
+        <span>A list of terrorist groups by size</span>
+      </div>
+      <div class="option" data-qi="3" data-oi="1">
+        <span class="letter">B</span>
+        <span>A periodization framework linking terrorism to global trends</span>
+      </div>
+      <div class="option" data-qi="3" data-oi="2">
+        <span class="letter">C</span>
+        <span>A cycle of global energy prices</span>
+      </div>
+      <div class="option" data-qi="3" data-oi="3">
+        <span class="letter">D</span>
+        <span>A legal definition used by courts</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-3"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.08s;">
+    <div class="q-num">Q.05</div>
+    <div class="q-text">One limitation of the 'waves' model is that it can:</div>
+    <div class="options">
+      <div class="option" data-qi="4" data-oi="0">
+        <span class="letter">A</span>
+        <span>Eliminate the role of ideology entirely</span>
+      </div>
+      <div class="option" data-qi="4" data-oi="1">
+        <span class="letter">B</span>
+        <span>Prove intent beyond reasonable doubt</span>
+      </div>
+      <div class="option" data-qi="4" data-oi="2">
+        <span class="letter">C</span>
+        <span>Force diverse cases into overly neat categories</span>
+      </div>
+      <div class="option" data-qi="4" data-oi="3">
+        <span class="letter">D</span>
+        <span>Replace case study methods completely</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-4"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.1s;">
+    <div class="q-num">Q.06</div>
+    <div class="q-text">According to strategy frameworks, terrorism is often:</div>
+    <div class="options">
+      <div class="option" data-qi="5" data-oi="0">
+        <span class="letter">A</span>
+        <span>Random violence without audiences</span>
+      </div>
+      <div class="option" data-qi="5" data-oi="1">
+        <span class="letter">B</span>
+        <span>The same as ordinary crime</span>
+      </div>
+      <div class="option" data-qi="5" data-oi="2">
+        <span class="letter">C</span>
+        <span>Only effective when it defeats an army</span>
+      </div>
+      <div class="option" data-qi="5" data-oi="3">
+        <span class="letter">D</span>
+        <span>A form of signaling and coercion aimed at wider audiences</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-5"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.12s;">
+    <div class="q-num">Q.07</div>
+    <div class="q-text">In Kydd and Walter's framework, 'provocation' generally aims to:</div>
+    <div class="options">
+      <div class="option" data-qi="6" data-oi="0">
+        <span class="letter">A</span>
+        <span>Trigger an excessive response to polarize publics</span>
+      </div>
+      <div class="option" data-qi="6" data-oi="1">
+        <span class="letter">B</span>
+        <span>Reduce state overreaction by calming tensions</span>
+      </div>
+      <div class="option" data-qi="6" data-oi="2">
+        <span class="letter">C</span>
+        <span>Make a state surrender immediately</span>
+      </div>
+      <div class="option" data-qi="6" data-oi="3">
+        <span class="letter">D</span>
+        <span>Replace ideology with economics</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-6"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.14s;">
+    <div class="q-num">Q.08</div>
+    <div class="q-text">'Outbidding' is most associated with:</div>
+    <div class="options">
+      <div class="option" data-qi="7" data-oi="0">
+        <span class="letter">A</span>
+        <span>Negotiation and compromise signaling</span>
+      </div>
+      <div class="option" data-qi="7" data-oi="1">
+        <span class="letter">B</span>
+        <span>Competing groups trying to appear more committed than rivals</span>
+      </div>
+      <div class="option" data-qi="7" data-oi="2">
+        <span class="letter">C</span>
+        <span>Corporate fraud and financial crime</span>
+      </div>
+      <div class="option" data-qi="7" data-oi="3">
+        <span class="letter">D</span>
+        <span>Natural disasters and emergency management</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-7"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.16s;">
+    <div class="q-num">Q.09</div>
+    <div class="q-text">A key distinction between 'strategy' and 'tactics' is:</div>
+    <div class="options">
+      <div class="option" data-qi="8" data-oi="0">
+        <span class="letter">A</span>
+        <span>Strategy is always violent; tactics are always peaceful</span>
+      </div>
+      <div class="option" data-qi="8" data-oi="1">
+        <span class="letter">B</span>
+        <span>Tactics are political goals; strategy is tools</span>
+      </div>
+      <div class="option" data-qi="8" data-oi="2">
+        <span class="letter">C</span>
+        <span>Strategy is for states only</span>
+      </div>
+      <div class="option" data-qi="8" data-oi="3">
+        <span class="letter">D</span>
+        <span>Strategy is the mechanism to reach goals; tactics are methods used</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-8"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.18s;">
+    <div class="q-num">Q.10</div>
+    <div class="q-text">A careful root-cause analysis should separate:</div>
+    <div class="options">
+      <div class="option" data-qi="9" data-oi="0">
+        <span class="letter">A</span>
+        <span>Weather, geography, and movies</span>
+      </div>
+      <div class="option" data-qi="9" data-oi="1">
+        <span class="letter">B</span>
+        <span>Elections, sports, and public holidays</span>
+      </div>
+      <div class="option" data-qi="9" data-oi="2">
+        <span class="letter">C</span>
+        <span>Drivers, enabling conditions, and triggers</span>
+      </div>
+      <div class="option" data-qi="9" data-oi="3">
+        <span class="letter">D</span>
+        <span>Fear, anger, and sadness</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-9"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.2s;">
+    <div class="q-num">Q.11</div>
+    <div class="q-text">A common analytic error is to treat 'explanation' as:</div>
+    <div class="options">
+      <div class="option" data-qi="10" data-oi="0">
+        <span class="letter">A</span>
+        <span>A justification of harm</span>
+      </div>
+      <div class="option" data-qi="10" data-oi="1">
+        <span class="letter">B</span>
+        <span>A denial of harm</span>
+      </div>
+      <div class="option" data-qi="10" data-oi="2">
+        <span class="letter">C</span>
+        <span>A requirement of law</span>
+      </div>
+      <div class="option" data-qi="10" data-oi="3">
+        <span class="letter">D</span>
+        <span>A synonym for data</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-10"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.22s;">
+    <div class="q-num">Q.12</div>
+    <div class="q-text">A typical hallmark of many terrorist campaigns is:</div>
+    <div class="options">
+      <div class="option" data-qi="11" data-oi="0">
+        <span class="letter">A</span>
+        <span>Total secrecy with no messaging</span>
+      </div>
+      <div class="option" data-qi="11" data-oi="1">
+        <span class="letter">B</span>
+        <span>Strategic communication to shape perception and behavior</span>
+      </div>
+      <div class="option" data-qi="11" data-oi="2">
+        <span class="letter">C</span>
+        <span>Direct battlefield victory as the main goal</span>
+      </div>
+      <div class="option" data-qi="11" data-oi="3">
+        <span class="letter">D</span>
+        <span>Elimination of all politics</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-11"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.24s;">
+    <div class="q-num">Q.13</div>
+    <div class="q-text">A major post-9/11 homeland security change involved:</div>
+    <div class="options">
+      <div class="option" data-qi="12" data-oi="0">
+        <span class="letter">A</span>
+        <span>Eliminating interagency coordination entirely</span>
+      </div>
+      <div class="option" data-qi="12" data-oi="1">
+        <span class="letter">B</span>
+        <span>Abandoning risk management</span>
+      </div>
+      <div class="option" data-qi="12" data-oi="2">
+        <span class="letter">C</span>
+        <span>Ending all oversight</span>
+      </div>
+      <div class="option" data-qi="12" data-oi="3">
+        <span class="letter">D</span>
+        <span>Increased attention to information sharing and prevention structures</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-12"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.26s;">
+    <div class="q-num">Q.14</div>
+    <div class="q-text">A strong definition of terrorism should be:</div>
+    <div class="options">
+      <div class="option" data-qi="13" data-oi="0">
+        <span class="letter">A</span>
+        <span>Purely emotional and flexible</span>
+      </div>
+      <div class="option" data-qi="13" data-oi="1">
+        <span class="letter">B</span>
+        <span>Designed to target political opponents</span>
+      </div>
+      <div class="option" data-qi="13" data-oi="2">
+        <span class="letter">C</span>
+        <span>Defensible, consistent, and purpose-aware</span>
+      </div>
+      <div class="option" data-qi="13" data-oi="3">
+        <span class="letter">D</span>
+        <span>Unrelated to law or policy</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-13"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.28s;">
+    <div class="q-num">Q.15</div>
+    <div class="q-text">The GTD Codebook is best described as:</div>
+    <div class="options">
+      <div class="option" data-qi="14" data-oi="0">
+        <span class="letter">A</span>
+        <span>A coding guide for terrorism incident data</span>
+      </div>
+      <div class="option" data-qi="14" data-oi="1">
+        <span class="letter">B</span>
+        <span>A legal textbook for prosecutors</span>
+      </div>
+      <div class="option" data-qi="14" data-oi="2">
+        <span class="letter">C</span>
+        <span>A news aggregator</span>
+      </div>
+      <div class="option" data-qi="14" data-oi="3">
+        <span class="letter">D</span>
+        <span>A classified intelligence product</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-14"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.3s;">
+    <div class="q-num">Q.16</div>
+    <div class="q-text">Terrorism often 'works' strategically by:</div>
+    <div class="options">
+      <div class="option" data-qi="15" data-oi="0">
+        <span class="letter">A</span>
+        <span>Making societies less polarized</span>
+      </div>
+      <div class="option" data-qi="15" data-oi="1">
+        <span class="letter">B</span>
+        <span>Influencing audiences beyond the immediate target</span>
+      </div>
+      <div class="option" data-qi="15" data-oi="2">
+        <span class="letter">C</span>
+        <span>Eliminating attention and fear</span>
+      </div>
+      <div class="option" data-qi="15" data-oi="3">
+        <span class="letter">D</span>
+        <span>Ending all media coverage</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-15"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.32s;">
+    <div class="q-num">Q.17</div>
+    <div class="q-text">One reason groups adopt terrorism rather than conventional conflict is:</div>
+    <div class="options">
+      <div class="option" data-qi="16" data-oi="0">
+        <span class="letter">A</span>
+        <span>The state always invites them to negotiate</span>
+      </div>
+      <div class="option" data-qi="16" data-oi="1">
+        <span class="letter">B</span>
+        <span>Terrorism guarantees victory</span>
+      </div>
+      <div class="option" data-qi="16" data-oi="2">
+        <span class="letter">C</span>
+        <span>Terrorism requires no organization</span>
+      </div>
+      <div class="option" data-qi="16" data-oi="3">
+        <span class="letter">D</span>
+        <span>Asymmetric power conditions make other options difficult</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-16"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.34s;">
+    <div class="q-num">Q.18</div>
+    <div class="q-text">A key homeland security challenge is balancing:</div>
+    <div class="options">
+      <div class="option" data-qi="17" data-oi="0">
+        <span class="letter">A</span>
+        <span>Weather patterns with airport design</span>
+      </div>
+      <div class="option" data-qi="17" data-oi="1">
+        <span class="letter">B</span>
+        <span>Sports rivalries with intelligence assessments</span>
+      </div>
+      <div class="option" data-qi="17" data-oi="2">
+        <span class="letter">C</span>
+        <span>Security objectives with civil liberties and legitimacy</span>
+      </div>
+      <div class="option" data-qi="17" data-oi="3">
+        <span class="letter">D</span>
+        <span>Music preferences with law enforcement budgets</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-17"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.36s;">
+    <div class="q-num">Q.19</div>
+    <div class="q-text">A useful analytic concept for handling uncertainty is:</div>
+    <div class="options">
+      <div class="option" data-qi="18" data-oi="0">
+        <span class="letter">A</span>
+        <span>Stating a confidence level and key assumptions</span>
+      </div>
+      <div class="option" data-qi="18" data-oi="1">
+        <span class="letter">B</span>
+        <span>Pretending you are certain to appear confident</span>
+      </div>
+      <div class="option" data-qi="18" data-oi="2">
+        <span class="letter">C</span>
+        <span>Ignoring alternative explanations</span>
+      </div>
+      <div class="option" data-qi="18" data-oi="3">
+        <span class="letter">D</span>
+        <span>Removing evidence that complicates conclusions</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-18"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.38s;">
+    <div class="q-num">Q.20</div>
+    <div class="q-text">A key vulnerability in terrorism research is:</div>
+    <div class="options">
+      <div class="option" data-qi="19" data-oi="0">
+        <span class="letter">A</span>
+        <span>Too much perfect information</span>
+      </div>
+      <div class="option" data-qi="19" data-oi="1">
+        <span class="letter">B</span>
+        <span>Biased sampling and reporting effects</span>
+      </div>
+      <div class="option" data-qi="19" data-oi="2">
+        <span class="letter">C</span>
+        <span>No need for conceptual clarity</span>
+      </div>
+      <div class="option" data-qi="19" data-oi="3">
+        <span class="letter">D</span>
+        <span>Total absence of strategy</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-19"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.4s;">
+    <div class="q-num">Q.21</div>
+    <div class="q-text">'Audience costs' in terrorism analysis refers to:</div>
+    <div class="options">
+      <div class="option" data-qi="20" data-oi="0">
+        <span class="letter">A</span>
+        <span>Ticket prices for public events</span>
+      </div>
+      <div class="option" data-qi="20" data-oi="1">
+        <span class="letter">B</span>
+        <span>The cost of printing posters</span>
+      </div>
+      <div class="option" data-qi="20" data-oi="2">
+        <span class="letter">C</span>
+        <span>The cost of gasoline</span>
+      </div>
+      <div class="option" data-qi="20" data-oi="3">
+        <span class="letter">D</span>
+        <span>How different audiences respond to signals and threats</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-20"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.42s;">
+    <div class="q-num">Q.22</div>
+    <div class="q-text">One reason media matters to terrorism is that it can:</div>
+    <div class="options">
+      <div class="option" data-qi="21" data-oi="0">
+        <span class="letter">A</span>
+        <span>Remove the political dimension completely</span>
+      </div>
+      <div class="option" data-qi="21" data-oi="1">
+        <span class="letter">B</span>
+        <span>Guarantee accurate interpretation always</span>
+      </div>
+      <div class="option" data-qi="21" data-oi="2">
+        <span class="letter">C</span>
+        <span>Amplify or distort intended messages and fear effects</span>
+      </div>
+      <div class="option" data-qi="21" data-oi="3">
+        <span class="letter">D</span>
+        <span>Prevent polarization automatically</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-21"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.44s;">
+    <div class="q-num">Q.23</div>
+    <div class="q-text">A scholarly definition of terrorism typically avoids:</div>
+    <div class="options">
+      <div class="option" data-qi="22" data-oi="0">
+        <span class="letter">A</span>
+        <span>Normative judgment about whether the cause is 'good'</span>
+      </div>
+      <div class="option" data-qi="22" data-oi="1">
+        <span class="letter">B</span>
+        <span>Evidence</span>
+      </div>
+      <div class="option" data-qi="22" data-oi="2">
+        <span class="letter">C</span>
+        <span>Context</span>
+      </div>
+      <div class="option" data-qi="22" data-oi="3">
+        <span class="letter">D</span>
+        <span>Analysis</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-22"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.46s;">
+    <div class="q-num">Q.24</div>
+    <div class="q-text">A 'single-cause' theory of terrorism is usually weak because:</div>
+    <div class="options">
+      <div class="option" data-qi="23" data-oi="0">
+        <span class="letter">A</span>
+        <span>Terrorism always has one cause</span>
+      </div>
+      <div class="option" data-qi="23" data-oi="1">
+        <span class="letter">B</span>
+        <span>Political violence is multi-causal and context dependent</span>
+      </div>
+      <div class="option" data-qi="23" data-oi="2">
+        <span class="letter">C</span>
+        <span>Data is unnecessary</span>
+      </div>
+      <div class="option" data-qi="23" data-oi="3">
+        <span class="letter">D</span>
+        <span>Ideology never matters</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-23"></div></div><div class="question-card" data-answered="false" style="animation-delay: 0.48s;">
+    <div class="q-num">Q.25</div>
+    <div class="q-text">The most responsible way to talk about terrorism is to:</div>
+    <div class="options">
+      <div class="option" data-qi="24" data-oi="0">
+        <span class="letter">A</span>
+        <span>Use generalizations to simplify everything</span>
+      </div>
+      <div class="option" data-qi="24" data-oi="1">
+        <span class="letter">B</span>
+        <span>Avoid definitions entirely</span>
+      </div>
+      <div class="option" data-qi="24" data-oi="2">
+        <span class="letter">C</span>
+        <span>Treat all cases as identical</span>
+      </div>
+      <div class="option" data-qi="24" data-oi="3">
+        <span class="letter">D</span>
+        <span>Use precise terms and evidence, acknowledging uncertainty</span>
+      </div>
+    </div>
+    <div class="answer-reveal" id="reveal-24"></div></div></div>
+
+<div class="btn-wrap">
+  <button class="submit-btn" onclick="submitQuiz()">Calculate My Score</button>
+</div>
+
+<div class="score-box" id="scoreBox">
+  <div class="score-number" id="scoreNum">–</div>
+  <div class="score-label" id="scoreLabel"></div><br>
+  <button class="reset-btn" onclick="resetQuiz()">↺ Reset &amp; Try Again</button>
+</div>
+
+<div class="section-header">
+  <span class="section-badge">Section B</span>
+  <span class="section-title">Short Answer</span>
+  <span class="section-meta">Choose 3 of 4 · 10 pts each = 30 pts</span>
+</div>
+<div class="questions-wrap" id="saWrap"><div class="essay-card">
+      <div class="essay-prompt" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
+        <span class="essay-num">SA.01</span>
+        <span class="essay-q">Explain why definitions of terrorism shape what governments prioritize.</span>
+        <span class="essay-toggle">+</span>
+      </div>
+      <div class="essay-guidance">
+        <div class="guidance-label">// What a full-credit answer includes</div>
+        <p>Full-credit responses should explain the definitional linkage to policy action — e.g., if a definition requires 'political motive,' governments may not classify certain attacks as terrorism, affecting resource allocation, legal tools, and public communication. Reference how state vs. non-state actor distinctions or inclusion of 'domestic' vs. 'international' terrorism changes what agencies are funded and what laws apply. A strong answer connects: definition → classification → policy response.</p>
+        <ul><li>Discuss at least one specific element of a terrorism definition (e.g., intent, audience, non-state actor)</li><li>Show how that element influences what gets counted as terrorism</li><li>Link to a concrete policy or agency response</li><li>Use course terminology accurately</li></ul>
+      </div></div><div class="essay-card">
+      <div class="essay-prompt" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
+        <span class="essay-num">SA.02</span>
+        <span class="essay-q">Describe one way the waves framework helps analysis and one way it can mislead.</span>
+        <span class="essay-toggle">+</span>
+      </div>
+      <div class="essay-guidance">
+        <div class="guidance-label">// What a full-credit answer includes</div>
+        <p>Students should demonstrate they understand Rapoport's periodization model and can critically evaluate it. A strength might be that it reveals global patterns, ideological shifts, and generational cycles. A weakness is that it can force diverse cases into overly tidy categories or obscure local drivers. Strong answers avoid simply listing the waves — they analyze the framework's utility and its limits.</p>
+        <ul><li>Name the waves framework correctly (Rapoport)</li><li>Give a concrete example of how it aids understanding</li><li>Give a concrete example of where it oversimplifies or misleads</li><li>Conclude with a nuanced evaluative statement</li></ul>
+      </div></div><div class="essay-card">
+      <div class="essay-prompt" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
+        <span class="essay-num">SA.03</span>
+        <span class="essay-q">Distinguish drivers, enabling conditions, and triggers in a generic example.</span>
+        <span class="essay-toggle">+</span>
+      </div>
+      <div class="essay-guidance">
+        <div class="guidance-label">// What a full-credit answer includes</div>
+        <p>Students should show they understand the three-part causal structure. Drivers are underlying grievances or structural factors (e.g., economic marginalization, identity threat). Enabling conditions are factors that make violence possible (e.g., weak state institutions, weapons access, radicalization networks). Triggers are the proximate event that precipitates action (e.g., a disputed election, arrest of a leader). Example: a disenfranchised minority (driver), in a state with poor governance and arms availability (enabling), reacts to a disputed election result (trigger).</p>
+        <ul><li>Define all three terms accurately</li><li>Provide a clear example for each</li><li>Avoid conflating broad 'cause' with proximate 'trigger'</li><li>Show why distinguishing them matters for prevention policy</li></ul>
+      </div></div><div class="essay-card">
+      <div class="essay-prompt" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
+        <span class="essay-num">SA.04</span>
+        <span class="essay-q">Define provocation and explain how overreaction can serve a terrorist strategy.</span>
+        <span class="essay-toggle">+</span>
+      </div>
+      <div class="essay-guidance">
+        <div class="guidance-label">// What a full-credit answer includes</div>
+        <p>Students should accurately define provocation as a strategic mechanism where a terrorist group attacks specifically to elicit a disproportionate state response. That overreaction (e.g., mass arrests, collective punishment, civil liberties restrictions) alienates moderate populations, drives recruitment, and delegitimizes the state. Kydd and Walter's framework should be referenced. A historical example (e.g., IRA/British overreaction, Al-Qaeda/post-9/11 response) would significantly strengthen the answer.</p>
+        <ul><li>Define provocation as a deliberate strategic mechanism</li><li>Explain the intended chain of consequences</li><li>Reference Kydd and Walter or course frameworks</li><li>Include an example of overreaction and its downstream effects</li></ul>
+      </div></div></div>
+
+<div class="section-header">
+  <span class="section-badge">Section C</span>
+  <span class="section-title">Essay</span>
+  <span class="section-meta">Choose 1 of 2 · 20 pts</span>
+</div>
+<div class="questions-wrap" id="essayWrap"><div class="essay-card">
+      <div class="essay-prompt" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
+        <span class="essay-num">Option A</span>
+        <span class="essay-q">'Terrorism is more about audiences than targets.' Defend or critique this claim using at least two course frameworks.</span>
+        <span class="essay-toggle">+</span>
+      </div>
+      <div class="essay-guidance">
+        <div class="guidance-label">// What a full-credit answer includes</div>
+        <p>This question tests whether students can apply multiple analytical frameworks to a central thesis about terrorism's communicative nature. A strong response will engage with the claim seriously — neither simply agreeing nor dismissing it. Students might use the strategic communication framework (terrorism as signaling), Kydd and Walter's mechanisms (provocation, outbidding), and/or the 'audience costs' concept. A full-credit essay will have a clear thesis, structured paragraphs, accurate course-specific terminology, and acknowledgment of counterarguments (e.g., cases where targets matter as much as or more than audiences).</p>
+        <ul><li>Clear thesis statement defending or critiquing the claim</li><li>Framework 1 applied with specificity (e.g., signaling/coercion model)</li><li>Framework 2 applied with specificity (e.g., Kydd &amp; Walter mechanisms)</li><li>Acknowledgment of counterarguments or limitations</li><li>Conclusion that connects back to the thesis</li><li>Accurate use of course terminology throughout</li></ul>
+      </div></div><div class="essay-card">
+      <div class="essay-prompt" onclick="this.parentElement.classList.toggle(&#39;open&#39;)">
+        <span class="essay-num">Option B</span>
+        <span class="essay-q">Explain how measurement choices (datasets, definitions, coding) can change policy decisions. Include one example of a misleading conclusion.</span>
+        <span class="essay-toggle">+</span>
+      </div>
+      <div class="essay-guidance">
+        <div class="guidance-label">// What a full-credit answer includes</div>
+        <p>This question asks students to connect methodological decisions to real-world policy consequences. A strong response will explain how dataset selection (e.g., GTD vs. RAND vs. ITERATE), definitional scope (state vs. non-state, domestic vs. international), and coding rules (what counts as a 'terrorist incident') all shape the picture policymakers receive. A misleading conclusion example might be: overrepresentation of Middle Eastern attacks in a Western-focused dataset leading to skewed threat prioritization, or inconsistent coding of 'motive' inflating or deflating attack counts.</p>
+        <ul><li>Explain at least two measurement choices (e.g., dataset selection, definition scope, coding rules)</li><li>Show how each choice shapes the data output</li><li>Provide a clear example of a potentially misleading conclusion</li><li>Connect to at least one real or hypothetical policy consequence</li><li>Demonstrate understanding of the GTD Codebook or similar source</li></ul>
+      </div></div></div>
+
+<footer>Practice copy — not for distribution as a graded assessment</footer>
+
+<script>
+// ── QUESTION DATA ──────────────────────────────────────────────────────────
+// Correct answers are manually distributed:
+// A(0): Q2, Q7, Q11, Q15, Q19, Q23        = 6 questions
+// B(1): Q4, Q8, Q12, Q16, Q20, Q24        = 6 questions
+// C(2): Q1, Q5, Q10, Q14, Q18, Q22        = 6 questions
+// D(3): Q3, Q6, Q9, Q13, Q17, Q21, Q25   = 7 questions
+
+const mcqs = [
+  // Q1 – correct: C
+  { q:"A key reason terrorism is difficult to define is that:",
+    opts:["It is always religiously motivated","It only occurs in democracies","Definitions include political and moral judgments","It is identical to conventional war"], ans:2 },
+  // Q2 – correct: A
+  { q:"A definition element most commonly included in academic definitions of terrorism is:",
+    opts:["Use or threat of violence toward an audience beyond the immediate victim","Use of uniforms and formal ranks","State monopoly on force","Control of territory as the primary goal"], ans:0 },
+  // Q3 – correct: D
+  { q:"A core measurement challenge in terrorism research is:",
+    opts:["Terrorism has no political goals","All incidents are reported equally across the world","Terrorism never involves messaging","Terrorism is easy to observe but hard to code consistently"], ans:3 },
+  // Q4 – correct: B
+  { q:"Rapoport's 'waves' model is best understood as:",
+    opts:["A list of terrorist groups by size","A periodization framework linking terrorism to global trends","A cycle of global energy prices","A legal definition used by courts"], ans:1 },
+  // Q5 – correct: C
+  { q:"One limitation of the 'waves' model is that it can:",
+    opts:["Eliminate the role of ideology entirely","Prove intent beyond reasonable doubt","Force diverse cases into overly neat categories","Replace case study methods completely"], ans:2 },
+  // Q6 – correct: D
+  { q:"According to strategy frameworks, terrorism is often:",
+    opts:["Random violence without audiences","The same as ordinary crime","Only effective when it defeats an army","A form of signaling and coercion aimed at wider audiences"], ans:3 },
+  // Q7 – correct: A
+  { q:"In Kydd and Walter's framework, 'provocation' generally aims to:",
+    opts:["Trigger an excessive response to polarize publics","Reduce state overreaction by calming tensions","Make a state surrender immediately","Replace ideology with economics"], ans:0 },
+  // Q8 – correct: B
+  { q:"'Outbidding' is most associated with:",
+    opts:["Negotiation and compromise signaling","Competing groups trying to appear more committed than rivals","Corporate fraud and financial crime","Natural disasters and emergency management"], ans:1 },
+  // Q9 – correct: D
+  { q:"A key distinction between 'strategy' and 'tactics' is:",
+    opts:["Strategy is always violent; tactics are always peaceful","Tactics are political goals; strategy is tools","Strategy is for states only","Strategy is the mechanism to reach goals; tactics are methods used"], ans:3 },
+  // Q10 – correct: C
+  { q:"A careful root-cause analysis should separate:",
+    opts:["Weather, geography, and movies","Elections, sports, and public holidays","Drivers, enabling conditions, and triggers","Fear, anger, and sadness"], ans:2 },
+  // Q11 – correct: A
+  { q:"A common analytic error is to treat 'explanation' as:",
+    opts:["A justification of harm","A denial of harm","A requirement of law","A synonym for data"], ans:0 },
+  // Q12 – correct: B
+  { q:"A typical hallmark of many terrorist campaigns is:",
+    opts:["Total secrecy with no messaging","Strategic communication to shape perception and behavior","Direct battlefield victory as the main goal","Elimination of all politics"], ans:1 },
+  // Q13 – correct: D
+  { q:"A major post-9/11 homeland security change involved:",
+    opts:["Eliminating interagency coordination entirely","Abandoning risk management","Ending all oversight","Increased attention to information sharing and prevention structures"], ans:3 },
+  // Q14 – correct: C
+  { q:"A strong definition of terrorism should be:",
+    opts:["Purely emotional and flexible","Designed to target political opponents","Defensible, consistent, and purpose-aware","Unrelated to law or policy"], ans:2 },
+  // Q15 – correct: A
+  { q:"The GTD Codebook is best described as:",
+    opts:["A coding guide for terrorism incident data","A legal textbook for prosecutors","A news aggregator","A classified intelligence product"], ans:0 },
+  // Q16 – correct: B
+  { q:"Terrorism often 'works' strategically by:",
+    opts:["Making societies less polarized","Influencing audiences beyond the immediate target","Eliminating attention and fear","Ending all media coverage"], ans:1 },
+  // Q17 – correct: D
+  { q:"One reason groups adopt terrorism rather than conventional conflict is:",
+    opts:["The state always invites them to negotiate","Terrorism guarantees victory","Terrorism requires no organization","Asymmetric power conditions make other options difficult"], ans:3 },
+  // Q18 – correct: C
+  { q:"A key homeland security challenge is balancing:",
+    opts:["Weather patterns with airport design","Sports rivalries with intelligence assessments","Security objectives with civil liberties and legitimacy","Music preferences with law enforcement budgets"], ans:2 },
+  // Q19 – correct: A
+  { q:"A useful analytic concept for handling uncertainty is:",
+    opts:["Stating a confidence level and key assumptions","Pretending you are certain to appear confident","Ignoring alternative explanations","Removing evidence that complicates conclusions"], ans:0 },
+  // Q20 – correct: B
+  { q:"A key vulnerability in terrorism research is:",
+    opts:["Too much perfect information","Biased sampling and reporting effects","No need for conceptual clarity","Total absence of strategy"], ans:1 },
+  // Q21 – correct: D
+  { q:"'Audience costs' in terrorism analysis refers to:",
+    opts:["Ticket prices for public events","The cost of printing posters","The cost of gasoline","How different audiences respond to signals and threats"], ans:3 },
+  // Q22 – correct: C
+  { q:"One reason media matters to terrorism is that it can:",
+    opts:["Remove the political dimension completely","Guarantee accurate interpretation always","Amplify or distort intended messages and fear effects","Prevent polarization automatically"], ans:2 },
+  // Q23 – correct: A
+  { q:"A scholarly definition of terrorism typically avoids:",
+    opts:["Normative judgment about whether the cause is 'good'","Evidence","Context","Analysis"], ans:0 },
+  // Q24 – correct: B
+  { q:"A 'single-cause' theory of terrorism is usually weak because:",
+    opts:["Terrorism always has one cause","Political violence is multi-causal and context dependent","Data is unnecessary","Ideology never matters"], ans:1 },
+  // Q25 – correct: D
+  { q:"The most responsible way to talk about terrorism is to:",
+    opts:["Use generalizations to simplify everything","Avoid definitions entirely","Treat all cases as identical","Use precise terms and evidence, acknowledging uncertainty"], ans:3 }
+];
+
+const shortAnswers = [
+  {
+    q:"Explain why definitions of terrorism shape what governments prioritize.",
+    guidance:"Full-credit responses should explain the definitional linkage to policy action — e.g., if a definition requires 'political motive,' governments may not classify certain attacks as terrorism, affecting resource allocation, legal tools, and public communication. Reference how state vs. non-state actor distinctions or inclusion of 'domestic' vs. 'international' terrorism changes what agencies are funded and what laws apply. A strong answer connects: definition → classification → policy response.",
+    bullets:["Discuss at least one specific element of a terrorism definition (e.g., intent, audience, non-state actor)","Show how that element influences what gets counted as terrorism","Link to a concrete policy or agency response","Use course terminology accurately"]
+  },
+  {
+    q:"Describe one way the waves framework helps analysis and one way it can mislead.",
+    guidance:"Students should demonstrate they understand Rapoport's periodization model and can critically evaluate it. A strength might be that it reveals global patterns, ideological shifts, and generational cycles. A weakness is that it can force diverse cases into overly tidy categories or obscure local drivers. Strong answers avoid simply listing the waves — they analyze the framework's utility and its limits.",
+    bullets:["Name the waves framework correctly (Rapoport)","Give a concrete example of how it aids understanding","Give a concrete example of where it oversimplifies or misleads","Conclude with a nuanced evaluative statement"]
+  },
+  {
+    q:"Distinguish drivers, enabling conditions, and triggers in a generic example.",
+    guidance:"Students should show they understand the three-part causal structure. Drivers are underlying grievances or structural factors (e.g., economic marginalization, identity threat). Enabling conditions are factors that make violence possible (e.g., weak state institutions, weapons access, radicalization networks). Triggers are the proximate event that precipitates action (e.g., a disputed election, arrest of a leader). Example: a disenfranchised minority (driver), in a state with poor governance and arms availability (enabling), reacts to a disputed election result (trigger).",
+    bullets:["Define all three terms accurately","Provide a clear example for each","Avoid conflating broad 'cause' with proximate 'trigger'","Show why distinguishing them matters for prevention policy"]
+  },
+  {
+    q:"Define provocation and explain how overreaction can serve a terrorist strategy.",
+    guidance:"Students should accurately define provocation as a strategic mechanism where a terrorist group attacks specifically to elicit a disproportionate state response. That overreaction (e.g., mass arrests, collective punishment, civil liberties restrictions) alienates moderate populations, drives recruitment, and delegitimizes the state. Kydd and Walter's framework should be referenced. A historical example (e.g., IRA/British overreaction, Al-Qaeda/post-9/11 response) would significantly strengthen the answer.",
+    bullets:["Define provocation as a deliberate strategic mechanism","Explain the intended chain of consequences","Reference Kydd and Walter or course frameworks","Include an example of overreaction and its downstream effects"]
+  }
+];
+
+const essays = [
+  {
+    label:"Option A",
+    q:"'Terrorism is more about audiences than targets.' Defend or critique this claim using at least two course frameworks.",
+    guidance:"This question tests whether students can apply multiple analytical frameworks to a central thesis about terrorism's communicative nature. A strong response will engage with the claim seriously — neither simply agreeing nor dismissing it. Students might use the strategic communication framework (terrorism as signaling), Kydd and Walter's mechanisms (provocation, outbidding), and/or the 'audience costs' concept. A full-credit essay will have a clear thesis, structured paragraphs, accurate course-specific terminology, and acknowledgment of counterarguments (e.g., cases where targets matter as much as or more than audiences).",
+    bullets:["Clear thesis statement defending or critiquing the claim","Framework 1 applied with specificity (e.g., signaling/coercion model)","Framework 2 applied with specificity (e.g., Kydd & Walter mechanisms)","Acknowledgment of counterarguments or limitations","Conclusion that connects back to the thesis","Accurate use of course terminology throughout"]
+  },
+  {
+    label:"Option B",
+    q:"Explain how measurement choices (datasets, definitions, coding) can change policy decisions. Include one example of a misleading conclusion.",
+    guidance:"This question asks students to connect methodological decisions to real-world policy consequences. A strong response will explain how dataset selection (e.g., GTD vs. RAND vs. ITERATE), definitional scope (state vs. non-state, domestic vs. international), and coding rules (what counts as a 'terrorist incident') all shape the picture policymakers receive. A misleading conclusion example might be: overrepresentation of Middle Eastern attacks in a Western-focused dataset leading to skewed threat prioritization, or inconsistent coding of 'motive' inflating or deflating attack counts.",
+    bullets:["Explain at least two measurement choices (e.g., dataset selection, definition scope, coding rules)","Show how each choice shapes the data output","Provide a clear example of a potentially misleading conclusion","Connect to at least one real or hypothetical policy consequence","Demonstrate understanding of the GTD Codebook or similar source"]
+  }
+];
+
+// ── RENDER MULTIPLE CHOICE ─────────────────────────────────────────────────
+const mcWrap = document.getElementById('mcWrap');
+let answered = 0;
+
+mcqs.forEach((item, qi) => {
+  const card = document.createElement('div');
+  card.className = 'question-card';
+  card.style.animationDelay = (qi * 0.02) + 's';
+  card.dataset.answered = 'false';
+  card.innerHTML = `
+    <div class="q-num">Q.${String(qi+1).padStart(2,'0')}</div>
+    <div class="q-text">${item.q}</div>
+    <div class="options">${item.opts.map((o,oi)=>`
+      <div class="option" data-qi="${qi}" data-oi="${oi}">
+        <span class="letter">${['A','B','C','D'][oi]}</span>
+        <span>${o}</span>
+      </div>`).join('')}
+    </div>
+    <div class="answer-reveal" id="reveal-${qi}"></div>`;
+  mcWrap.appendChild(card);
+});
+
+mcWrap.addEventListener('click', e => {
+  const opt = e.target.closest('.option');
+  if (!opt) return;
+  const qi = +opt.dataset.qi, oi = +opt.dataset.oi;
+  const card = opt.closest('.question-card');
+  if (card.dataset.answered === 'true') return;
+  card.dataset.answered = 'true';
+  card.dataset.selected = oi;
+  answered++;
+  updateProgress();
+  const allOpts = card.querySelectorAll('.option');
+  allOpts.forEach(o => o.classList.add('disabled'));
+  const correct = mcqs[qi].ans;
+  allOpts[correct].classList.add('correct');
+  if (oi !== correct) opt.classList.add('wrong');
+  const reveal = document.getElementById(`reveal-${qi}`);
+  const L = ['A','B','C','D'];
+  reveal.textContent = oi === correct
+    ? `✓ Correct — ${L[correct]}. ${mcqs[qi].opts[correct]}`
+    : `✗ Incorrect — Correct answer is ${L[correct]}: ${mcqs[qi].opts[correct]}`;
+  reveal.classList.add('show');
+});
+
+function updateProgress() {
+  const pct = (answered / mcqs.length * 100).toFixed(0);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `${answered} of ${mcqs.length} questions answered`;
+}
+
+function submitQuiz() {
+  let correct = 0;
+  mcqs.forEach((item, qi) => {
+    const card = mcWrap.children[qi];
+    if (card.dataset.answered === 'true' && +card.dataset.selected === item.ans) correct++;
+  });
+  const box = document.getElementById('scoreBox');
+  box.classList.add('show');
+  document.getElementById('scoreNum').textContent = correct + ' / 25';
+  const pts = correct * 2;
+  document.getElementById('scoreLabel').textContent = `${pts} points · ${(pts/50*100).toFixed(0)}% of Section A`;
+  box.scrollIntoView({ behavior:'smooth', block:'center' });
+}
+
+function resetQuiz() {
+  answered = 0;
+  updateProgress();
+  mcWrap.querySelectorAll('.question-card').forEach(card => {
+    card.dataset.answered = 'false';
+    card.dataset.selected = '';
+    card.querySelectorAll('.option').forEach(o => o.classList.remove('correct','wrong','disabled'));
+    card.querySelectorAll('.answer-reveal').forEach(r => { r.classList.remove('show'); r.textContent=''; });
+  });
+  document.getElementById('scoreBox').classList.remove('show');
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+// ── RENDER SHORT ANSWER & ESSAY ────────────────────────────────────────────
+function buildExpandable(container, items, prefix) {
+  items.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'essay-card';
+    card.innerHTML = `
+      <div class="essay-prompt" onclick="this.parentElement.classList.toggle('open')">
+        <span class="essay-num">${prefix ? prefix + String(i+1).padStart(2,'0') : item.label}</span>
+        <span class="essay-q">${item.q}</span>
+        <span class="essay-toggle">+</span>
+      </div>
+      <div class="essay-guidance">
+        <div class="guidance-label">// What a full-credit answer includes</div>
+        <p>${item.guidance}</p>
+        <ul>${item.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+buildExpandable(document.getElementById('saWrap'), shortAnswers, 'SA.');
+buildExpandable(document.getElementById('essayWrap'), essays, null);
+</script>
+
+
+</body></html>
